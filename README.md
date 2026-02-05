@@ -33,8 +33,8 @@ Every device requires an initial configuration to enable SSH communication via t
 
 ### 4. Docker Environment
 
-Alpine linux images running on Docker containers are used whenever a linux environment is needed. A base image for the same can be made from the Dockerfile provided.
-
+Alpine linux images running on Docker containers are used for client and infrastructure hosts. A common base image 
+is created from the provided Dockerfile and reused. 
 ```
 docker pull alpine:latest
 docker build --no-cache -t custom-alpine .
@@ -44,9 +44,9 @@ docker build --no-cache -t custom-alpine .
 
 Cisco IOSv images utilize legacy cryptographic algorithms (e.g., `ssh-rsa`, `diffie-hellman-group14-sha1`) that are disabled by default on modern OpenSSH clients.
 
-To allow Ansible to connect to the lab nodes, add the following configuration to your `~/.ssh/config` file:
+To allow Ansible to connect to the lab nodes, add the following configuration to `~/.ssh/config`:
 
-```ssh
+```
 # GNS3 Lab Management Network
 Host 172.31.255.*
     KexAlgorithms +diffie-hellman-group14-sha1
