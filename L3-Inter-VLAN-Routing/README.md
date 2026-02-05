@@ -6,8 +6,9 @@ This topology illustrates a multi-tier network architecture with a CiscoIoSv rou
 
 ## Network Topology Diagram
 
+<center>
 ![Network Topology](./Layer3_inter_VLAN.png)
-
+</center>
 ---
 
 ## Automation of Topology Configuration
@@ -37,7 +38,7 @@ This topology illustrates a multi-tier network architecture with a CiscoIoSv rou
 ### Automation Prerequisites
 
 - All nodes must have their management interfaces connected to the **Management Switch** to allow SSH access for automation agents.
-- Boostrap configurations for all nodes should be applied.
+- [Boostrap configurations](./bootstrap.md) for all nodes should be applied.
 - Ensure ssh config is configured to allow the outdated algorithms used by the cisco images.
 
 ### Run the Playbook

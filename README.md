@@ -8,7 +8,7 @@ This is a repository of network topologies built in **GNS3** and automated with 
 
 Each folder contains the specific topology, Ansible playbooks, topology diagrams and explanations.
 
-- **[Layer 3 Inter-VLAN Lab](./Layer3_InterVLAN)**: A hierarchical network consisting of SVIs, Inter-VLAN routing and DHCP/DNS services.
+- **[Layer 3 Inter-VLAN Lab](./L3-Inter-VLAN-Routing)**: A hierarchical network consisting of SVIs, Inter-VLAN routing and DHCP/DNS services.
 <!-- - **[Link Redundant OSPF Lab](./OSPF_Redundant_Lab)**: A network with dynamic routing and link redundancy between Edge and Core devices.
 - **[Hierarchical Spine-Leaf OSPF Lab](./OSPF_Redundant_Lab)**: A network running OSPF with complete redundancy at the Core. Also includes Stub areas. -->
 
