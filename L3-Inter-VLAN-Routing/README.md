@@ -7,7 +7,7 @@ This topology illustrates a multi-tier network architecture with a CiscoIoSv rou
 ## Network Topology Diagram
 
 <center>
-![Network Topology](./Layer3_inter_VLAN.png)
+  ![Network Topology](./Layer3_inter_VLAN.png) 
 </center>
 ---
 
