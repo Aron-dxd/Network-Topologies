@@ -1,0 +1,23 @@
+hostname: R1
+role: router
+site_id: 0
+
+nat_acl:
+  - 10.2.2.0 0.0.0.255
+  - 192.168.0.0 0.0.255.255
+
+route:
+  - 192.168.0.0 255.255.0.0 10.1.1.2
+
+interfaces:
+  - name: "GigabitEthernet0/1"
+    desc: "LINK_TO_INTERNET"
+    mode: l3
+    dhcp: true
+    nat: "outside"
+
+  - name: "GigabitEthernet0/2"
+    desc: "LINK_TO_CORE"
+    link: R1_Core
+    mode: l3
+    nat: "inside"

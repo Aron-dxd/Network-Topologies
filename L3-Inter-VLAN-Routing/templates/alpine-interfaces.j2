@@ -1,0 +1,13 @@
+{% for intf in network %}
+auto {{ intf.interface }}
+iface {{ intf.interface }} inet static
+    address {{ intf.address }}
+    netmask {{ intf.netmask }}
+{% if intf.gateway is defined %}
+    gateway {{ intf.gateway }}
+{% endif %}
+{% if intf.dns_upstream is defined %}
+    up echo -e "nameserver {{ intf.dns_upstream | default('1.1.1.1') }}\nsearch {{ search_domain | default('lab.local') }}" > /etc/resolv.conf
+{% endif %}
+    
+{% endfor %}

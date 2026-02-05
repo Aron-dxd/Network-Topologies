@@ -1,0 +1,18 @@
+{% for vlan in network_plan.vlan_configs %}
+{% if vlan.site_id == site_id and role != "router" %}
+vlan {{ vlan.id }}
+ name {{ vlan.name }}
+
+
+{% if vlan.ip is defined %}
+interface vlan {{ vlan.id }}
+ ip address {{ vlan.ip | ansible.utils.ipaddr('address') }} {{ vlan.ip | ansible.utils.ipaddr('netmask') }}
+
+{% if vlan.helper is defined %}
+ ip helper-address {{vlan.helper}}
+{%endif%}
+
+ no shutdown
+{% endif %}
+{% endif %}
+{% endfor %}

@@ -1,0 +1,24 @@
+hostname: Core
+role: core
+site_id: 1
+routing: true
+
+route:
+  - 0.0.0.0 0.0.0.0 10.1.1.1
+
+interfaces:
+  - name: "GigabitEthernet0/1"
+    desc: "LINK_TO_ROUTER"
+    link: Core_R1
+    mode: l3
+
+  - name: "GigabitEthernet0/2"
+    desc: "LINK_TO_ACCESS"
+    mode: trunk
+    allowed: "10,20"
+
+  - name: "GigabitEthernet3/3"
+    desc: "LINK_TO_DHCP_DNS"
+    mode: access
+    vlan: 100
+    spantree: "portfast"

@@ -1,0 +1,16 @@
+# Global Settings
+domain={{ domain }}
+expand-hosts
+local=/{{ domain }}/
+domain-needed
+interface={{ interface }}
+bind-interfaces
+
+# DHCP Scopes
+{% for scope in dhcp_scopes %}
+# Subnet for Gateway {{ scope.gateway }}
+dhcp-range=set:{{scope.tag}},{{ scope.start_ip }},{{ scope.end_ip }},24h
+dhcp-option=tag:{{scope.tag}},3,{{ scope.gateway }}
+dhcp-option=tag:{{scope.tag}},6,{{ scope.dns_servers | join(',') }}
+
+{% endfor %}

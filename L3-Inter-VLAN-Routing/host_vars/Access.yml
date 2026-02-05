@@ -1,0 +1,33 @@
+hostname: Access_A
+role: access
+site_id: 2
+
+interfaces:
+  - name: "GigabitEthernet0/1"
+    desc: "UPLINK_TO_CORE"
+    mode: trunk
+    allowed: "10,20"
+
+  - name: "GigabitEthernet1/0"
+    desc: "ACCESS_VLAN_10"
+    mode: access
+    vlan: 10
+    spantree: "portfast"
+
+  - name: "GigabitEthernet1/1"
+    desc: "ACCESS_VLAN_10"
+    mode: access
+    vlan: 10
+    spantree: "portfast"
+
+  - name: "GigabitEthernet1/2"
+    desc: "ACCESS_VLAN_10"
+    mode: access
+    vlan: 20
+    spantree: "portfast"
+
+  - name: "GigabitEthernet1/3"
+    desc: "ACCESS_VLAN_10"
+    mode: access
+    vlan: 20
+    spantree: "portfast"

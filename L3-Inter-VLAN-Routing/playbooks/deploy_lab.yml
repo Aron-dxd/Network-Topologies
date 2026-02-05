@@ -1,0 +1,72 @@
+- name: Configure Cisco Network Devices
+  hosts: cisco
+  gather_facts: no
+  tasks:
+    - name: Generate full configuration from template
+      template:
+        src: "../templates/master_config.j2"
+        dest: "/tmp/{{ inventory_hostname }}.cfg"
+
+    - name: Push configuration and take backup
+      cisco.ios.ios_config:
+        src: "/tmp/{{ inventory_hostname }}.cfg"
+        backup: yes
+        backup_options:
+          dir_path: "./backups"
+        save_when: modified
+
+- name: Configure Alpine Services
+  hosts: linux_nodes
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Configure Network Interfaces
+      template:
+        src: "../templates/alpine-interfaces.j2"
+        dest: "/etc/network/interfaces"
+      register: net_config
+
+    - name: Apply Network Changes
+      shell: "nohup sh -c '/etc/init.d/networking restart' > /dev/null 2>&1 &"
+      when: net_config.changed
+      async: 10
+      poll: 0
+
+    - name: Wait for server to come back online
+      wait_for_connection:
+        delay: 5
+        timeout: 60
+      when: net_config.changed
+
+    - name: Wait for Internet connectivity
+      shell: ping -c 1 1.1.1.1
+      register: internet_check
+      until: internet_check.rc == 0
+      retries: 20
+      delay: 5
+
+    - name: Install dnsmasq
+      apk:
+        name: dnsmasq
+        state: present
+        update_cache: yes
+
+    - name: Configure dnsmasq
+      template:
+        src: "../templates/dnsmasq.conf.j2"
+        dest: "/etc/dnsmasq.conf"
+        validate: "dnsmasq --test --conf-file=%s"
+      notify: Restart dnsmasq
+
+    - name: Enable dnsmasq on boot
+      service:
+        name: dnsmasq
+        enabled: yes
+        state: started
+
+  handlers:
+    - name: Restart dnsmasq
+      service:
+        name: dnsmasq
+        state: restarted

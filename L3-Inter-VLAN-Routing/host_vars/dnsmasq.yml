@@ -1,0 +1,30 @@
+# System Networki`ng
+network:
+  - interface: "eth1"
+    address: "192.168.100.10"
+    netmask: "255.255.255.0"
+    gateway: "192.168.100.1"
+    dns_upstream: "1.1.1.1"
+
+  - interface: "eth0"
+    address: "172.31.255.13"
+    netmask: "255.255.255.0"
+
+# dnsmasq config
+domain: "lab.local"
+interface: "eth1"
+expand-hosts: true
+domain-needed: true
+
+dhcp_scopes:
+  - start_ip: "192.168.10.50"
+    tag: "vlan10"
+    end_ip: "192.168.10.100"
+    gateway: "192.168.10.1"
+    dns_servers: ["192.168.100.10", "1.1.1.1"]
+
+  - start_ip: "192.168.20.50"
+    tag: "vlan20"
+    end_ip: "192.168.20.100"
+    gateway: "192.168.20.1"
+    dns_servers: ["192.168.100.10", "1.1.1.1"]

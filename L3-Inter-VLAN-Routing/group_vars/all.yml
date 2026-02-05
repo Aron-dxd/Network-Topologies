@@ -1,0 +1,31 @@
+network_plan:
+  p2p:
+    R1_Core: "10.1.1.1/30"
+    Core_R1: "10.1.1.2/30"
+    Core_Access: "10.2.2.1/30"
+
+  vlan_configs:
+    - id: 10
+      name: "IT"
+      ip: "192.168.10.1/24"
+      helper: "192.168.100.10"
+      site_id: 1
+
+    - id: 10
+      name: "IT"
+      site_id: 2
+
+    - id: 20
+      name: "NETWORK"
+      ip: "192.168.20.1/24"
+      helper: "192.168.100.10"
+      site_id: 1
+
+    - id: 20
+      name: "NETWORK"
+      site_id: 2
+
+    - id: 100
+      name: "SERVICES"
+      ip: "192.168.100.1/24"
+      site_id: 1
