@@ -1,0 +1,24 @@
+{% for intf in interfaces %}
+interface {{ intf.name }}
+ description {{ intf.desc }}
+{% if intf.mode == 'l3' %}
+{% if role != "router" %}
+ no switchport
+{% endif %}
+{% if intf.link is defined %}
+ ip address {{ network_plan.p2p[intf.link] | ansible.utils.ipaddr('address') }} {{ network_plan.p2p[intf.link] | ansible.utils.ipaddr('netmask') }}
+{% elif intf.dhcp %}
+ ip address dhcp
+{% endif %}
+{% if intf.nat is defined %}
+ ip nat {{ intf.nat }}
+{% endif %}
+ no shutdown
+{% elif intf.mode == 'trunk' %}
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+{% elif intf.mode == 'access' %}
+ switchport mode access
+ switchport access vlan {{ intf.vlan }}
+{% endif %}
+{% endfor %}

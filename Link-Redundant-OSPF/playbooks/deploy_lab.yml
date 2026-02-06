@@ -1,0 +1,19 @@
+- name: Configure Network
+  hosts: all
+  gather_facts: no
+  collections:
+    - cisco.ios
+
+  tasks:
+    - name: Generate full configuration from template
+      template:
+        src: ../templates/master_config.j2
+        dest: "/tmp/{{ inventory_hostname }}.cfg"
+
+    - name: Push configuration and take backup
+      cisco.ios.ios_config:
+        src: "./tmp/{{ inventory_hostname }}.cfg"
+        backup: yes
+        backup_options:
+          dir_path: "../backups"
+        save_when: modified

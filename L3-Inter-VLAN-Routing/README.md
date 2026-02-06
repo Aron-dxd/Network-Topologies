@@ -60,7 +60,7 @@ The network follows a classic three-tier approach (collapsed Core/Distribution):
 
 - **Edge (R1)**: This router is responsible for handling NAT/PAT to provide internet access to the internal networks via the Cloud node.
 
-- **Core Switch (Core)**: It is a Cisco IOSvL2 switch configured as an L3 device. It handles Inter-VLAN routing using Switched Virtual Interfaces (SVIs). Each of these interfaces act as default gateways for the end users and also have helper addresses configured to point to the DHCP server.
+- **Core Switch (Core)**: It is a Cisco IOSvL2 switch operating as a Layer 3 device. It handles Inter-VLAN routing using Switched Virtual Interfaces (SVIs). Each of these interfaces act as default gateways for the end users and also have helper addresses configured to point to the DHCP server.
 
 - **Access Switch (Access)**: It is a Cisco IOSvL2 switch which separates the traffic into various VLANs before passing it to the `Core`. The ports connecting `Core` and `Access` are both configured to be trunk ports so as to carry the VLANs across.
 
@@ -80,7 +80,7 @@ The network follows a classic three-tier approach (collapsed Core/Distribution):
 
 - **Hairpinning:** Traffic between two devices in the same VLAN (or even different VLANs on the same Access switch) must travel up the trunk link to the `Core` switch to be routed/switched and then come right back down the same physical path. This wastes bandwidth on the Core uplink and increases latency.
 
-* **Lack of Path Redundancy:** Although STP is configured (with PortFast for instant link availability), the protocol is effectively "dormant" regarding failover. Because there are no redundant physical links between switches, there is no opportunity to test STP convergence.
+- **Lack of Path Redundancy:** Although STP is configured (with PortFast for instant link availability), the protocol is effectively "dormant" regarding failover. Because there are no redundant physical links between switches, there is no opportunity to test STP convergence.
 
 ### Next Topology Goals
 

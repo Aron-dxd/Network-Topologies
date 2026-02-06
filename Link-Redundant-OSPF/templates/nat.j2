@@ -1,0 +1,6 @@
+{% if nat_acl is defined %}
+{% for net in nat_acl %}
+access-list 1 permit {{ net }}
+{% endfor %}
+ip nat inside source list 1 interface GigabitEthernet0/1 overload
+{% endif %}

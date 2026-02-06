@@ -1,0 +1,15 @@
+network_plan:
+  p2p:
+    R1_CoreA: "10.1.1.1/30"
+    R1_CoreB: "10.2.2.1/30"
+    CoreA_R1: "10.1.1.2/30"
+    CoreA_CoreB: "10.3.3.1/30"
+    CoreB_R1: "10.2.2.2/30"
+    CoreB_CoreA: "10.3.3.2/30"
+
+  vlan_configs:
+    - id: 10
+      name: "CLIENTS"
+      ip: "192.168.10.1/24"
+      ospf_area: 0
+      site_id: 1

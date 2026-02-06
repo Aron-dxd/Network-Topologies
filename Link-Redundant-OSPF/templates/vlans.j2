@@ -1,0 +1,23 @@
+{% for vlan in network_plan.vlan_configs %}
+{% if vlan.site_id == site_id and role != "router" %}
+vlan {{ vlan.id }}
+ name {{ vlan.name }}
+
+interface vlan {{ vlan.id }}
+
+{% if vlan.ip is defined %}
+ ip address {{ vlan.ip | ansible.utils.ipaddr('address') }} {{ vlan.ip | ansible.utils.ipaddr('netmask') }}
+{% elif vlan.ip_map is defined and hostname in vlan.ip_map %}
+ ip address {{ vlan.ip_map[hostname] | ansible.utils.ipaddr('address') }} {{ vlan.ip_map[hostname] | ansible.utils.ipaddr('netmask') }}
+{% endif %}
+
+{% if vlan.vrrp is defined %}
+ vrrp {{ vlan.vrrp.group }} ip {{ vlan.vrrp.vip }}
+ vrrp {{ vlan.vrrp.group }} priority {{ 120 if hostname == 'Core_A' else 100 }}
+ vrrp {{ vlan.vrrp.group }} preempt
+{% endif %}
+
+ no shutdown
+
+{% endif %}
+{% endfor %}
