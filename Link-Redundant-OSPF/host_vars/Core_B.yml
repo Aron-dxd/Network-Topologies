@@ -1,0 +1,18 @@
+hostname: Core_B
+role: core
+site_id: 2
+routing: true
+
+ospf:
+  process: 1
+
+interfaces:
+  - name: "GigabitEthernet0/1"
+    desc: "LINK_TO_ROUTER"
+    link: CoreB_R1
+    mode: l3
+
+  - name: "GigabitEthernet0/2"
+    desc: "LINK_TO_CORE_A"
+    link: CoreB_CoreA
+    mode: l3

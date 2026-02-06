@@ -1,0 +1,23 @@
+{% for intf in interfaces if intf.ospf_area is defined %}
+interface {{intf.name}}
+ ip ospf {{ospf.process}} area {{intf.ospf_area}}
+{% endfor %}
+
+router ospf {{ ospf.process }}
+
+{% for intf in interfaces if intf.link is defined and intf.mode == 'l3' %}
+{% if intf.link in network_plan.p2p %}
+{% set subnet = network_plan.p2p[intf.link] | ansible.utils.ipaddr('network/prefix') %}
+ network {{ subnet | ansible.utils.ipaddr('network') }} {{ subnet | ansible.utils.ipaddr('wildcard') }} area {{ network_plan.vlan_configs.ospf_area | default(0) }}
+{% endif %}
+{% endfor %}
+
+{% for vlan in network_plan.vlan_configs if vlan.site_id == site_id %}
+{% if vlan.ip is defined %}
+ network {{ vlan.ip | ansible.utils.ipaddr('network') }} {{ vlan.ip | ansible.utils.ipaddr('wildcard') }} area {{ vlan.ospf_area | default(10) }}
+{% endif %}
+{% endfor %}
+
+{% if role == "router" %}
+ default-information originate
+{% endif %}

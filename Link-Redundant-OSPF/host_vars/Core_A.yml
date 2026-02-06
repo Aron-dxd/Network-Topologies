@@ -1,0 +1,24 @@
+hostname: Core_A
+role: core
+site_id: 1
+routing: true
+
+ospf:
+  process: 1
+
+interfaces:
+  - name: "GigabitEthernet0/1"
+    desc: "LINK_TO_ROUTER"
+    link: CoreA_R1
+    mode: l3
+
+  - name: "GigabitEthernet0/2"
+    desc: "LINK_TO_CORE_B"
+    link: CoreA_CoreB
+    mode: l3
+
+  - name: "GigabitEthernet1/0"
+    desc: "ACCESS_VLAN_10"
+    mode: access
+    vlan: 10
+    spantree: "portfast"

@@ -1,0 +1,30 @@
+hostname: R1
+role: router
+site_id: 0
+
+ospf:
+  process: 1
+
+nat_acl:
+  - 10.1.1.0 0.0.0.255
+  - 10.2.2.0 0.0.0.255
+  - 192.168.0.0 0.0.255.255
+
+interfaces:
+  - name: "GigabitEthernet0/1"
+    desc: "LINK_TO_INTERNET"
+    mode: l3
+    dhcp: true
+    nat: "outside"
+
+  - name: "GigabitEthernet0/2"
+    desc: "LINK_TO_CORE_A"
+    link: R1_CoreA
+    mode: l3
+    nat: "inside"
+
+  - name: "GigabitEthernet0/3"
+    desc: "LINK_TO_CORE_B"
+    link: R1_CoreB
+    mode: l3
+    nat: "inside"

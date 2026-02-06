@@ -1,0 +1,7 @@
+{% if routing | default(false) %}
+ip routing
+{% endif %}
+{% include 'vlans.j2' %}
+{% include 'interfaces.j2' %}
+{% include 'ospf.j2' %}
+{% include 'nat.j2' %}
