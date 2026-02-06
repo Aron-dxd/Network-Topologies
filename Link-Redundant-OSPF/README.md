@@ -78,7 +78,7 @@ This network implements a collapsed core architecture where link redundancy is a
 
 ---
 
-## ⚠️ Shortcomings & Future Considerations
+## Shortcomings & Future Considerations
 
 ### Current Limitations
 
